@@ -1,0 +1,12 @@
+# MATLAB
+*.asv
+*.m~
+*.mat
+*.fig
+*.mex*
+
+# Veri klasörü
+data/
+
+# MATLAB tercihleri
+*.mlprefs
