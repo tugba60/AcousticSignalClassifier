@@ -1,4 +1,4 @@
-function plot_fft(sinyal,fs) %dışarıya bir şey döndürmüyor sadece grafik çiziyor bu nedenle çıktısı yok
+function [frekans, buyukluk] = plot_fft(sinyal,fs) 
     %frekans ekseni oluşturuken N sayısına ihtiyacımız var.
     N=length(sinyal); %sinyaldeki toplam örnek sayısı. fs = 44100 x 2.5 saniye, yani N yaklaşık 110000 civarında bir sayı olacak.
     
@@ -16,13 +16,7 @@ function plot_fft(sinyal,fs) %dışarıya bir şey döndürmüyor sadece grafik 
     %frekans eksenini oluşturalım
     frekans=linspace(0,fs/2,N/2); %N/2 ADET EŞİT ARALIKLI NOKTA OLACAK
     
-    %GÖRSELLEŞTİRELİM
-    figure;
-    plot(frekans,buyukluk);
-    xlabel('Frekans (Hz)');
-    ylabel('Büyüklük');
-    title('FFT ile Frekans Domenini')
-    grid on;
+  
 end
 
 %plot_fft(sinyal,fs); ile çağırıyoruz
