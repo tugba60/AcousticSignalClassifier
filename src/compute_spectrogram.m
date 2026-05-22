@@ -11,29 +11,29 @@
 
 %Bu fonksiyon; sinyal ve fs alacak, sinyali küçük pencerelere bölecek, her pencereye FFT uygulayacak,
 %sonuçları yan yana dizerek 2D spektrogram oluşturacak, ve bunu görüntü olarak kaydedecek.
-function spektrogram_matris = compute_spectrogram(sinyal,fs, class_name) %saniyede fs = 44100 örnek
-    pencere_boyutu=0.025; %25 milisaniye 0.025 saniye
+function spektrogram_matris = compute_spectrogram(sinyal,fs, class_name, dosya_kayit, dosya_adi) %saniyede fs = 44100 örnek
+    pencere_boyutu=0.01; %25 milisaniye 0.025 saniye
     ornek_sayisi = fs*pencere_boyutu; %0.025 saniyede bu kadar örnek
     %örnek sayısı tam sayı olmalı yuvarlanacak
     ornek_sayisi = round(ornek_sayisi);
     adim=ornek_sayisi/2;
     nfft = 2^nextpow2(ornek_sayisi);%bir sayının üstündeki en yakın 2'nin kuvvetini bulmak için fnk. kullanılır.
     num_pencere = floor((length(sinyal) - ornek_sayisi) / adim) + 1;
-    spektrogram_matris = zeros(nfft/2, num_pencere); % Frekans ve zaman matrisi
+    spektrogram_matris = zeros(floor(nfft/2), num_pencere); % Frekans ve zaman matrisi
     for i=1:num_pencere
         bas = 1 + (i-1)*adim;
         bitis = bas + ornek_sayisi - 1;
         pencere = sinyal(bas:bitis);
         % FFT uygula ve sonuçları spektrogram matrisine ekle
         fft_sonuc = fft(pencere, nfft);
-        spektrogram_matris(:, i) = abs(fft_sonuc(1:nfft/2));
+        spektrogram_matris(:, i) = abs(fft_sonuc(1:floor(nfft/2)));
     end
-    figure;
-    imagesc(spektrogram_matris);
-    xlabel('Time (s)');
-    ylabel('Frequency (Hz)');
-    title(strcat('Spectrogram -',class_name));
-    colorbar;
-    
-    saveas(gcf, ['results/spectrogram_' class_name '.png']);
+
+    spektrogram_db = 20 * log10(spektrogram_matris + 1e-10);
+    min_val = min(spektrogram_db(:));
+    max_val = max(spektrogram_db(:));
+    norm_matris = (spektrogram_db - min_val) / (max_val - min_val);
+    [sat, sut] = size(norm_matris);
+    disp(size(norm_matris));
+    imwrite(norm_matris', [dosya_kayit '/' class_name '_' dosya_adi '.png']);
 end
