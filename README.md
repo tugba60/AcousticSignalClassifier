@@ -10,6 +10,7 @@ UrbanSound8K veri seti kullanılarak 10 farklı ses sınıfı (gun_shot, dog_bar
 
 ### FFT (Fast Fourier Transform)
 Ses sinyali zaman domeninde binlerce sayıdan oluşur. Her sayı o anki ses basıncını temsil eder. FFT bu sinyali frekans domenine taşır: hangi frekansların var olduğunu ve her birinin ne kadar güçlü olduğunu gösterir. Örneğin silah sesi geniş bir frekans aralığına yayılırken köpek havlaması dar ve düşük frekanslarda yoğunlaşır.
+FFT hakkında daha fazla bilgi için [kendi Medium yazım](https://medium.com/@karatastugba132/di%CC%87ji%CC%87tal-si%CC%87nyal-i%CC%87%C5%9Fleme-b%C3%B6l%C3%BCm-3-dspnin-kalbi-fourier-d%C3%B6n%C3%BC%C5%9F%C3%BCm%C3%BC-cffdc53f6267) adresini ziyaret edebilirsiniz.
 
 ### STFT (Short-Time Fourier Transform)
 FFT tüm sinyali tek seferde analiz eder ancak zaman bilgisi kaybolur. STFT ise sinyali küçük zaman pencerelerine böler, her pencereye ayrı FFT uygular ve sonuçları yan yana dizer. Çıktı 2D bir görüntüdür: x ekseni zaman, y ekseni frekans, renk ise o anda o frekanstaki enerji miktarı. Bu görüntüye spektrogram denir ve CNN'in girdisi olarak kullanılır.
