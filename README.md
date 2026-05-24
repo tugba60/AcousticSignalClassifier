@@ -8,6 +8,9 @@ UrbanSound8K veri seti kullanılarak 10 farklı ses sınıfı (gun_shot, dog_bar
 
 ## Sinyal İşleme Temelleri
 
+### Ses Verisini Sayılara Çevirme
+Ses havada yayılan basınç dalgalarıdır. İnsanların duyduğu bu seslere analog sinyal denir. Bilgisayar analog sinyali anlayamaz, sadece sayıları anlar. Ses kartı saniyede 44100 kez (fs- örnekleme frekansı-saniyede fs kadar ölçüm yapılmış) bu voltajı ölçüyor ve sayıya çeviriyor. Buna [Analog-Dijital Dönüşüm (ADC)](https://medium.com/@karatastugba132/b%C3%B6l%C3%BCm-1-sinyallere-giri%C5%9F-a36fd7c84967) deniyor. Her ölçüm -1 ile 1 arasında bir sayı oluyor. Örneğin, 4 saniyelik ses = 4 × 44100 = 176400 sayı. Bu sayılar .wav dosyasına yazılıyor. (bu projede kullanılan veriler de .wav dosyası şeklindedir. load_audio.m dosyasında audioread() fonksiyonu bu sayıları okuma işlemini yapar.)
+
 ### FFT (Fast Fourier Transform)
 Ses sinyali zaman domeninde binlerce sayıdan oluşur. Her sayı o anki ses basıncını temsil eder. FFT bu sinyali frekans domenine taşır: hangi frekansların var olduğunu ve her birinin ne kadar güçlü olduğunu gösterir. Örneğin silah sesi geniş bir frekans aralığına yayılırken köpek havlaması dar ve düşük frekanslarda yoğunlaşır.
 FFT hakkında daha fazla bilgi için [kendi Medium yazım](https://medium.com/@karatastugba132/di%CC%87ji%CC%87tal-si%CC%87nyal-i%CC%87%C5%9Fleme-b%C3%B6l%C3%BCm-3-dspnin-kalbi-fourier-d%C3%B6n%C3%BC%C5%9F%C3%BCm%C3%BC-cffdc53f6267) adresini ziyaret edebilirsiniz.

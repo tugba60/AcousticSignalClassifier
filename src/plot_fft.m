@@ -3,10 +3,10 @@ function [frekans, buyukluk] = plot_fft(sinyal,fs)
     N=length(sinyal); %sinyaldeki toplam örnek sayısı. fs = 44100 x 2.5 saniye, yani N yaklaşık 110000 civarında bir sayı olacak.
     
     %fft işlemi için fft() fonksiyonunu çağırmak gerek
-    %fft_result da N tane sayı var — ama bunlar karmaşık sayılar
+    %fft_sonuc da N tane sayı var — ama bunlar karmaşık sayılar
     fft_sonuc=fft(sinyal,N);%sinyal vektörünü frekans domenine taşıyor.
+
     %karmaşık sayıları gerçek sayılara çeviriyoruz
-    
     buyukluk = abs(fft_sonuc); %vektöründe her frekans için "ne kadar güçlü" bilgisi var, artık karmaşık sayı yok.
     %FFT gerçek sayılardan oluşan bir sinyale uygulandığında matematiksel olarak simetrik bir sonuç üretiyor. 
     %Yani 0-22050 Hz arası ile 22050-44100 Hz arası birebir aynı bilgiyi taşıyor.
@@ -18,5 +18,3 @@ function [frekans, buyukluk] = plot_fft(sinyal,fs)
     
   
 end
-
-%plot_fft(sinyal,fs); ile çağırıyoruz

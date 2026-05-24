@@ -2,13 +2,15 @@ function [trained_model, test_img] = train_resnet()
 klasor_yolu='../spectrograms/';
 
 images=imageDatastore(klasor_yolu,'LabelSource', 'foldernames', 'IncludeSubfolders', true);
-images.ReadFcn = @(x) imresize(repmat(imread(x), [1 1 3]), [224 224]);
+images.ReadFcn = @(x) imresize(repmat(imread(x), [1 1 3]), [224 224]); %resize işlemi
+% %80 train | %10 val | %10 test
 [train_img, temp] = splitEachLabel(images, 0.8, 'randomized');
 [val_img, test_img] = splitEachLabel(temp, 0.5, 'randomized');%matlab de veri bölme
 
 %resnet yükleme
-net = resnet18;
+net = resnet18; %cpu da rahat çalışsın diye resnet18
 layers = layerGraph(net);
+%son katmanlarını değiştir
 new_fc = fullyConnectedLayer(10, 'Name', 'fc10'); %sınıflandırma kısmını değiştiriyoruz, verimize uygulamak için
 new_softmax = softmaxLayer('Name', 'softmax');
 new_output = classificationLayer('Name', 'output');
@@ -23,6 +25,6 @@ options = trainingOptions('adam', ... %optimizer -sgd de olabilir
     'ValidationFrequency', 30, ...
     'Plots', 'training-progress', ...
     'Verbose', true);
-trained_model = trainNetwork(train_img, layers, options);
+trained_model = trainNetwork(train_img, layers, options); %eğit
 save('../results/resnet_model.mat', 'trained_model');
 end
